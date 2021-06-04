@@ -8,6 +8,7 @@ import top.lxl.rpc.exception.RpcException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @Author : lxl
@@ -38,7 +39,6 @@ public class DefaultServiceRegistry implements ServiceRegistry{
             serviceMap.put(i.getCanonicalName(),service);
         }
         logger.info("向接口：{} 注册服务：{}",interfaces,serviceName);
-
     }
 
     @Override
@@ -47,6 +47,8 @@ public class DefaultServiceRegistry implements ServiceRegistry{
         if (service==null){
             throw new RpcException(RpcError.SERVICE_NOT_FOUND);
         }
+
         return service;
     }
+
 }

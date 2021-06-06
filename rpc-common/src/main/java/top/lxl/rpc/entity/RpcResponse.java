@@ -1,5 +1,6 @@
 package top.lxl.rpc.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import top.lxl.rpc.enumeration.ResponseCode;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @describe: 提供者执行完成或出错后向消费者返回的结果对象
  */
 @Data
+
 public class RpcResponse<T> implements Serializable {
     /**
      * 响应状态码

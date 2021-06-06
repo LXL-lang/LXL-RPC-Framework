@@ -18,10 +18,10 @@ import java.util.concurrent.ConcurrentMap;
 public class DefaultServiceRegistry implements ServiceRegistry{
     private static final Logger logger= LoggerFactory.getLogger(DefaultServiceRegistry.class);
     //final修饰是引用的对象不能变serviceMap只能指向当前引用的对象
-    private final Map<String,Object> serviceMap=new ConcurrentHashMap<>();
+    private static final Map<String,Object> serviceMap=new ConcurrentHashMap<>();
 
 //    NewKeySet:都说是相当于并行集合，相比较于keyset多了add方法。函数得到的set是空的。
-    private final Set<String> registeredService=ConcurrentHashMap.newKeySet();
+    private static final Set<String> registeredService=ConcurrentHashMap.newKeySet();
 
 //  getName()返回的是Class在JVM中的名字，而getCanonicalName()返回的Specifications名字可读性更友好，对于普通对象类两者没有区别
 

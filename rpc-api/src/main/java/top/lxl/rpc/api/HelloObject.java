@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class HelloObject implements Serializable {//implements Serializable需要从客户端传送给服务端
     private Integer id;
     private String message;

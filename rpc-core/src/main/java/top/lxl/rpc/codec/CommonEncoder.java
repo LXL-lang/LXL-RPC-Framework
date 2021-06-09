@@ -19,7 +19,7 @@ public class CommonEncoder extends MessageToByteEncoder {
         this.serializer=serializer;
     }
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Object msg, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
     //发送魔术
         out.writeInt(MAGIC_NUMBER);
         //发送PackgeType

@@ -1,7 +1,8 @@
 package top.lxl.test;
 
-import top.lxl.rpc.registry.DefaultServiceRegistry;
-import top.lxl.rpc.socket.server.SocketServer;
+import top.lxl.rpc.api.HelloService;
+import top.lxl.rpc.serializer.HessianSerializer;
+import top.lxl.rpc.transport.socket.server.SocketServer;
 
 /**
  * @Author : lxl
@@ -11,10 +12,9 @@ import top.lxl.rpc.socket.server.SocketServer;
 public class SocketTestServer {
     public static void main(String[] args) {
         HelloServiceImpl helloService = new HelloServiceImpl();
-        DefaultServiceRegistry serviceRegistry = new DefaultServiceRegistry();
-        serviceRegistry.register(helloService);
-        SocketServer rpcServer = new SocketServer(serviceRegistry);
-        rpcServer.start(9000);
+        SocketServer socketServer = new SocketServer("127.0.0.1", 9998);
+        socketServer.setSerializer(new HessianSerializer());
+        socketServer.publishService(helloService, HelloService.class);
 
     }
 }

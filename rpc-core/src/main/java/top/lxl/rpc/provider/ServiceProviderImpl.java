@@ -1,4 +1,4 @@
-package top.lxl.rpc.registry;
+package top.lxl.rpc.provider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +8,14 @@ import top.lxl.rpc.exception.RpcException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @Author : lxl
  * @create : 2021/4/29 21:49
- * @describe:
+ * @describe: 默认的服务注册表，保存服务端本地服务
  */
-public class DefaultServiceRegistry implements ServiceRegistry{
-    private static final Logger logger= LoggerFactory.getLogger(DefaultServiceRegistry.class);
+public class ServiceProviderImpl implements ServiceProvider {
+    private static final Logger logger= LoggerFactory.getLogger(ServiceProviderImpl.class);
     //final修饰是引用的对象不能变serviceMap只能指向当前引用的对象
     private static final Map<String,Object> serviceMap=new ConcurrentHashMap<>();
 
@@ -26,7 +25,7 @@ public class DefaultServiceRegistry implements ServiceRegistry{
 //  getName()返回的是Class在JVM中的名字，而getCanonicalName()返回的Specifications名字可读性更友好，对于普通对象类两者没有区别
 
     @Override
-    public synchronized  <T> void register(T service) {
+    public   <T> void addServiceProvider(T service) {
         String serviceName = service.getClass().getCanonicalName();
         if (registeredService.contains(serviceName)) return;
         registeredService.add(serviceName);
@@ -42,7 +41,7 @@ public class DefaultServiceRegistry implements ServiceRegistry{
     }
 
     @Override
-    public synchronized Object getService(String serviceName) {
+    public  Object getServiceProvider(String serviceName) {
         Object service = serviceMap.get(serviceName);//得到注册的service服务
         if (service==null){
             throw new RpcException(RpcError.SERVICE_NOT_FOUND);

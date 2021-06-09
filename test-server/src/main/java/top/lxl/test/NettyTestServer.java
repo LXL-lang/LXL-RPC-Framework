@@ -1,9 +1,11 @@
 package top.lxl.test;
 
 import top.lxl.rpc.api.HelloService;
-import top.lxl.rpc.netty.server.NettyServer;
-import top.lxl.rpc.registry.DefaultServiceRegistry;
-import top.lxl.rpc.registry.ServiceRegistry;
+import top.lxl.rpc.serializer.KryoSerializer;
+import top.lxl.rpc.serializer.ProtobufSerializer;
+import top.lxl.rpc.transport.netty.server.NettyServer;
+import top.lxl.rpc.provider.ServiceProviderImpl;
+import top.lxl.rpc.provider.ServiceProvider;
 
 /**
  * @Author : lxl
@@ -13,9 +15,8 @@ import top.lxl.rpc.registry.ServiceRegistry;
 public class NettyTestServer {
     public static void main(String[] args) {
         HelloService helloService=new HelloServiceImpl();
-        ServiceRegistry registry = new DefaultServiceRegistry();
-        registry.register(helloService);
-        NettyServer server = new NettyServer();
-        server.start(9999);
+        NettyServer server = new NettyServer("127.0.0.1",9999);
+        server.setSerializer(new ProtobufSerializer());
+        server.publishService(helloService,HelloService.class);
     }
 }

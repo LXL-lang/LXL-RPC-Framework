@@ -1,6 +1,7 @@
 package top.lxl.rpc;
 
 import top.lxl.rpc.entity.RpcRequest;
+import top.lxl.rpc.serializer.CommonSerializer;
 
 /**
  * @Author : lxl
@@ -9,4 +10,5 @@ import top.lxl.rpc.entity.RpcRequest;
  */
 public interface RpcClient {
     Object sendRequest(RpcRequest rpcRequest);
+    void setSerializer(CommonSerializer serializer);
 }

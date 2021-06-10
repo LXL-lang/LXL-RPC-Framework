@@ -14,6 +14,7 @@ import top.lxl.rpc.codec.CommonDecoder;
 import top.lxl.rpc.codec.CommonEncoder;
 import top.lxl.rpc.enumeration.RpcError;
 import top.lxl.rpc.exception.RpcException;
+import top.lxl.rpc.hook.ShutdownHook;
 import top.lxl.rpc.provider.ServiceProvider;
 import top.lxl.rpc.provider.ServiceProviderImpl;
 import top.lxl.rpc.registry.NacosServiceRegistry;
@@ -53,6 +54,7 @@ public class NettyServer implements RpcServer {
     }
     @Override
     public void start() {
+        ShutdownHook.getShutdownHook().addClearAllHook();
         EventLoopGroup bossGroup=new NioEventLoopGroup();
         EventLoopGroup workGroup=new NioEventLoopGroup();
         try {

@@ -1,4 +1,4 @@
-package top.lxl.rpc.util;
+package top.lxl.rpc.factory;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;

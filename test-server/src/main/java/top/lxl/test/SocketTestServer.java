@@ -1,6 +1,7 @@
 package top.lxl.test;
 
 import top.lxl.rpc.api.HelloService;
+import top.lxl.rpc.serializer.CommonSerializer;
 import top.lxl.rpc.serializer.HessianSerializer;
 import top.lxl.rpc.transport.socket.server.SocketServer;
 
@@ -11,10 +12,8 @@ import top.lxl.rpc.transport.socket.server.SocketServer;
  */
 public class SocketTestServer {
     public static void main(String[] args) {
-        HelloServiceImpl helloService = new HelloServiceImpl();
-        SocketServer socketServer = new SocketServer("127.0.0.1", 9998);
-        socketServer.setSerializer(new HessianSerializer());
+        HelloService helloService = new HelloServiceImpl2();
+        SocketServer socketServer = new SocketServer("127.0.0.1", 9998, CommonSerializer.HESSIAN_SERIALIZER);
         socketServer.publishService(helloService, HelloService.class);
-
     }
 }

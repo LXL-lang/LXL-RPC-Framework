@@ -18,6 +18,10 @@ import top.lxl.rpc.exception.RpcException;
 public class RpcMessageChecker {
     public static final String INTERFACE_NAME="interfaceName";
     private static final Logger logger= LoggerFactory.getLogger(RpcMessageChecker.class);
+
+    public RpcMessageChecker() {
+    }
+
     public static void check(RpcRequest rpcRequest, RpcResponse rpcResponse){
         if (rpcResponse==null){
             logger.error("调用服务失败,serviceName:{}",rpcRequest.getInterfaceName());

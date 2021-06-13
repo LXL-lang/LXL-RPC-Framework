@@ -3,7 +3,7 @@ package top.lxl.rpc.hook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lxl.rpc.util.NacosUtil;
-import top.lxl.rpc.util.ThreadPoolFactory;
+import top.lxl.rpc.factory.ThreadPoolFactory;
 
 /**
  * @Author : lxl

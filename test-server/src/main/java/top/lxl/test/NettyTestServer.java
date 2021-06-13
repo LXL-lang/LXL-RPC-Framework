@@ -1,6 +1,7 @@
 package top.lxl.test;
 
 import top.lxl.rpc.api.HelloService;
+import top.lxl.rpc.serializer.CommonSerializer;
 import top.lxl.rpc.serializer.KryoSerializer;
 import top.lxl.rpc.serializer.ProtobufSerializer;
 import top.lxl.rpc.transport.netty.server.NettyServer;
@@ -15,8 +16,8 @@ import top.lxl.rpc.provider.ServiceProvider;
 public class NettyTestServer {
     public static void main(String[] args) {
         HelloService helloService=new HelloServiceImpl();
-        NettyServer server = new NettyServer("127.0.0.1",9999);
-        server.setSerializer(new ProtobufSerializer());
+        NettyServer server = new NettyServer("127.0.0.1",9999, CommonSerializer.PROTOBUF_SERIALIZER);
+
         server.publishService(helloService,HelloService.class);
     }
 }

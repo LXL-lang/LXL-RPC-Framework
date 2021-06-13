@@ -18,7 +18,7 @@ import java.util.function.DoubleToIntFunction;
 /**
  * @Author : lxl
  * @create : 2021/6/5 17:04
- * @describe:
+ * @describe: 通用的解码拦截器
  */
 public class CommonDecoder extends ReplayingDecoder {
     private static final Logger logger = LoggerFactory.getLogger(CommonDecoder.class);

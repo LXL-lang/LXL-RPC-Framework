@@ -4,6 +4,7 @@ import top.lxl.rpc.RpcClient;
 import top.lxl.rpc.RpcClientProxy;
 import top.lxl.rpc.api.HelloObject;
 import top.lxl.rpc.api.HelloService;
+import top.lxl.rpc.serializer.CommonSerializer;
 import top.lxl.rpc.serializer.KryoSerializer;
 import top.lxl.rpc.transport.netty.client.NettyClient;
 
@@ -14,8 +15,7 @@ import top.lxl.rpc.transport.netty.client.NettyClient;
  */
 public class NettyTestClient {
     public static void main(String[] args) {
-        RpcClient client = new NettyClient();
-        client.setSerializer(new KryoSerializer());
+        RpcClient client = new NettyClient(CommonSerializer.PROTOBUF_SERIALIZER);
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         HelloService helloService = rpcClientProxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, "This is a message");

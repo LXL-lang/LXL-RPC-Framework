@@ -34,16 +34,16 @@ public class ObjectReader {
         in.read(numberBytes);
         int packageCode=bytesToInt(numberBytes);
         Class<?> packageClass;
-        if (packageCode==PackageType.RESPONSE_PACK.getCode()){
-            packageClass= RpcResponse.class;
-        }else if (packageCode==PackageType.REQUEST_PACK.getCode()){
-            packageClass=RpcRequest.class;
+        if (packageCode == PackageType.REQUEST_PACK.getCode()){
+            packageClass = RpcRequest.class;
+        }else if (packageCode == PackageType.RESPONSE_PACK.getCode()){
+            packageClass = RpcResponse.class;
         }else {
             logger.error("不识别的数据包:{}",packageCode);
             throw new RpcException(RpcError.UNKNOWN_PACKAGE_TYPE);
         }
         in.read(numberBytes);
-        int serializerCode=bytesToInt(numberBytes);
+        int serializerCode =bytesToInt(numberBytes);
         CommonSerializer serializer = CommonSerializer.getByCode(serializerCode);
         if (serializer==null){
             logger.error("不识别的反序列化器: {}", serializerCode);

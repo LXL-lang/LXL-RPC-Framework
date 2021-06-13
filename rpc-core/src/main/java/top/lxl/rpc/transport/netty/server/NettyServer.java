@@ -7,6 +7,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lxl.rpc.RpcServer;
@@ -22,6 +23,7 @@ import top.lxl.rpc.registry.ServiceRegistry;
 import top.lxl.rpc.serializer.CommonSerializer;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author : lxl
@@ -32,23 +34,28 @@ public class NettyServer implements RpcServer {
     private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
     private final String host;
     private final int port;
-    private  CommonSerializer serializer;
+    private final CommonSerializer serializer;
     private final ServiceRegistry serviceRegistry;
     private final ServiceProvider serviceProvider;
+
     public NettyServer(String host,int port){
+        this(host,port,DEFAULT_SERIALIZER);
+    }
+    public NettyServer(String host,int port,Integer serializer){
         this.host=host;
         this.port=port;
         serviceRegistry=new NacosServiceRegistry();
         serviceProvider=new ServiceProviderImpl();
+        this.serializer=CommonSerializer.getByCode(serializer);
     }
 // publishService，用于向 Nacos 注册服务：
     @Override
-    public <T> void publishService(Object service, Class<T> serviceClass) {
+    public <T> void publishService(T service, Class<T> serviceClass) {
         if (serializer==null){
             logger.error("未设置序列化器");
             throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
         }
-        serviceProvider.addServiceProvider(service);
+        serviceProvider.addServiceProvider(service,serviceClass);
         serviceRegistry.register(serviceClass.getCanonicalName(),new InetSocketAddress(host,port));
         start();
     }
@@ -69,6 +76,7 @@ public class NettyServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel channel) throws Exception {
                             ChannelPipeline pipeline = channel.pipeline();
+                            pipeline.addLast(new IdleStateHandler(30,0,0, TimeUnit.SECONDS));
                             pipeline.addLast(new CommonEncoder(serializer));//编码器
                             pipeline.addLast(new CommonDecoder());//解码器
                             pipeline.addLast(new NettyServerHandler());//业务处理器
@@ -82,8 +90,5 @@ public class NettyServer implements RpcServer {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }
-    }
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
     }
 }

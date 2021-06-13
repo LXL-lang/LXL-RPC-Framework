@@ -10,12 +10,11 @@ import top.lxl.rpc.api.HelloService;
  * @create : 2021/4/28 18:03
  * @describe:
  */
-public class HelloServiceImpl implements HelloService {
-    private static final Logger logger= LoggerFactory.getLogger(HelloServiceImpl.class);
+public class HelloServiceImpl2 implements HelloService {
+    private static final Logger logger= LoggerFactory.getLogger(HelloServiceImpl2.class);
     @Override
     public String hello(HelloObject object) {
         logger.info("接收到的消息：{}",object.getMessage());
-        return "这是调用的返回值，id=" + object.getId();
-//        return "本次处理来自Netty服务";
+         return "本次处理来自Socket服务";
     }
 }
